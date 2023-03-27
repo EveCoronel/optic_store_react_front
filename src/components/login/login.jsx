@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, Navigate } from "react-router-dom";
 import "../components.css"
 import axios from 'axios';
 import { erorrToast, successToast } from '../../utils/toastify';
 import Cookies from 'js-cookie';
+import AuthContext from '../../context/authContext';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -11,9 +12,12 @@ function Login() {
     const [success, setSuccess] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
 
+    const authContext = useContext(AuthContext);
+
     useEffect(() => {
         const token = Cookies.get('session');
         if (token) {
+            authContext.login(token)
             setAuthenticated(true);
         }
     }, []);
@@ -43,8 +47,8 @@ function Login() {
         <>
             {authenticated && <Navigate to="/home" />}
             {success && <Navigate to="/cart" />}
-            <div className='content is-flex-grow-1'>
-                <form className='box' onSubmit={handleLogin}>
+            <div className='auth-div content is-flex-grow-1'>
+                <form className='box auth-form' onSubmit={handleLogin}>
                     <div className="field">
                         <label className="label">
                             Email:

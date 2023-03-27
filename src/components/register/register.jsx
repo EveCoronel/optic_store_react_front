@@ -62,7 +62,7 @@ function Register() {
             {authenticated && <Navigate to="/home" />}
             {success && <Navigate to="/cart" />}
             <div className='content is-flex-grow-1'>
-                <form className='box' onSubmit={handleRegister}>
+                <form className='box auth-form' onSubmit={handleRegister}>
                     <div className="field">
                         <label className="label">
                             Full Name:
@@ -101,7 +101,7 @@ function Register() {
                     </div>
                     <button className="button is-primary" type="submit" onClick={() => handleRegister}>Register</button>
                 </form>
-                <article>
+                <article className='auth-buttons'>
                     <span>Already registed?</span>
                     <Link to={'/'} >
                         <button className='button'>Login Here</button>
