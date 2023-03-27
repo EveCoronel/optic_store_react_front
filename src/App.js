@@ -12,18 +12,18 @@ import { AuthContextProvider } from './context/authContext';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <AuthContextProvider>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/register" element={<Register />}></Route>
             <Route path="/chat" element={<Chat />}></Route>
-          </AuthContextProvider>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-      <ToastContainer />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+        <ToastContainer />
+      </AuthContextProvider>
     </div>
   );
 }
