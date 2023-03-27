@@ -12,7 +12,7 @@ function Chat() {
     useEffect(() => {
         const token = Cookies.get('session');
 
-        const socket = io('http://localhost:8080', {
+        const socket = io('https://opticecommercekoa-production.up.railway.app', {
             auth: {
                 token: token
             }

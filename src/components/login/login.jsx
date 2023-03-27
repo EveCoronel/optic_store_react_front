@@ -29,7 +29,7 @@ function Login() {
             username: email,
             password
         }
-        axios.post('http://localhost:8080/api/auth/login', user)
+        axios.post('https://opticecommercekoa-production.up.railway.app/api/auth/login', user)
             .then(response => {
                 successToast("The login was sucessfully!")
                 Cookies.set('session', response?.data?.data?.token, { expires: 1 / 24, path: '/' });

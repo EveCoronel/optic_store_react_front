@@ -35,10 +35,10 @@ function Register() {
             phoneNumber
         };
 
-        axios.post('http://localhost:8080/api/auth/register', newUser)
+        axios.post('https://opticecommercekoa-production.up.railway.app/api/auth/register', newUser)
             .then(response => {
                 successToast("Welcome to Optic Store!")
-                axios.post('http://localhost:8080/api/auth/login', { username: newUser.username, password: newUser.password })
+                axios.post('https://opticecommercekoa-production.up.railway.app/api/auth/login', { username: newUser.username, password: newUser.password })
                     .then(response => {
                         Cookies.set('session', response?.data?.data?.token, { expires: 1 / 24, path: '/' });
                         return setSuccess(true)
