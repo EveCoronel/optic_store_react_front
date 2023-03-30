@@ -44,7 +44,7 @@ function Login() {
     }
 
     return (
-        <>
+        <main>
             {authenticated && <Navigate to="/home" />}
             {success && <Navigate to="/cart" />}
             <div className='auth-div content is-flex-grow-1'>
@@ -70,7 +70,7 @@ function Login() {
                     </Link>
                 </article>
             </div>
-        </>
+        </main>
     );
 }
 

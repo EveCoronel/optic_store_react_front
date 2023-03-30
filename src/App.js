@@ -11,7 +11,7 @@ import { AuthContextProvider } from './context/authContext';
 
 function App() {
   return (
-    <div className="App">
+    <body className="App">
       <AuthContextProvider>
         <BrowserRouter>
           <Navbar />
@@ -24,7 +24,7 @@ function App() {
         </BrowserRouter>
         <ToastContainer />
       </AuthContextProvider>
-    </div>
+    </body>
   );
 }
 

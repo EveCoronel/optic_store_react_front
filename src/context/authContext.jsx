@@ -1,23 +1,31 @@
+import Cookies from "js-cookie";
 import React, { useState } from "react";
 
+
 const AuthContext = React.createContext({
-  isAuthenticated: false,
   token: null,
-  login: (token) => {},
-  logout: () => {},
+  login: (token) => { },
+  logout: () => { },
+  isAuthenticated: () => { }
 });
 
 export function AuthContextProvider(props) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
 
+  function isAuthenticated() {
+    const token = Cookies.get('session');
+    if (!token) {
+      return false;
+    } else {
+      return true;
+    }
+  }
   function loginHandler(token) {
-    setIsAuthenticated(true);
     setToken(token);
   }
 
   function logoutHandler() {
-    setIsAuthenticated(false);
+    Cookies.remove('session')
     setToken(null);
   }
 

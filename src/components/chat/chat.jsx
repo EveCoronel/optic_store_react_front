@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "../components.css"
 import io from 'socket.io-client';
 import Cookies from 'js-cookie';
-// import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import timeAgo from '../../utils/timeAgo';
+import AuthContext from '../../context/authContext';
 
 const token = Cookies.get('session');
 
@@ -11,35 +12,39 @@ const token = Cookies.get('session');
 
 function Chat() {
 
+
     const [socketSuccess, setSocketSuccess] = useState(false);
     const [newMessage, setNewMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
+    const authContext = useContext(AuthContext);
+    const isAuthenticated = authContext.isAuthenticated();
 
     useEffect(() => {
+        if (isAuthenticated) {
+            const socket = io('https://opticecommercekoa-production.up.railway.app', {
+                auth: {
+                    token: token
+                }
+            });
 
-        const socket = io('https://opticecommercekoa-production.up.railway.app', {
-            auth: {
-                token: token
-            }
-        });
+            setSocket(socket);
 
-        setSocket(socket);
+            socket.on('connect', () => {
+                setSocketSuccess(true)
+                console.log('Socket.IO connection established');
+            });
 
-        socket.on('connect', () => {
-            setSocketSuccess(true)
-            console.log('Socket.IO connection established');
-        });
+            socket.on('messages', (messages) => {
+                setMessages(messages);
+            });
 
-        socket.on('messages', (messages) => {
-            setMessages(messages);
-        });
+            socket.on('connect_error', (err) => {
+                console.error('Socket.IO connection error:', err);
+            });
 
-        socket.on('connect_error', (err) => {
-            console.error('Socket.IO connection error:', err);
-        });
-
-        return () => socket.disconnect();
+            return () => socket.disconnect();
+        }
     }, []);
 
 
@@ -48,12 +53,13 @@ function Chat() {
         setNewMessage("")
     }
 
-    return (
-        <>
+
+    if (isAuthenticated) {
+        return (<>
             {socketSuccess &&
-                <div className="container">
-                    <div className="columns">
-                        <div className="column is-4-desktop is-12-tablet">
+                <main>
+                    <div className="divChat">
+                        <div className='container_chat'>
                             <div className="box">
                                 <div className="media">
                                 </div>
@@ -90,10 +96,21 @@ function Chat() {
                             </div>
                         </div>
                     </div>
-                </div>
-            } {!socketSuccess && <div>Chat not available, return later</div>}
+                </main>
+            } {!socketSuccess && <main className='divChat notification'>Chat not available, return later</main>}
         </>
-    );
+        )
+    } else {
+        return (
+            <div className="chatNotAuthenticated notification is-warning divChat">
+                <p>You must login for using the chat</p>
+                <Link to={"/"} >
+                    <button className="button is-primary">Log in</button>
+                </Link>
+            </div>
+        )
+    }
+
 }
 
 export default Chat;

@@ -1,4 +1,5 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+@import "../variables.css";
 
 .box {
     max-width: 700px;
@@ -11,14 +12,70 @@
     justify-content: space-evenly;
 }
 
-.auth-buttons{
+.auth-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
-.auth-div{
+
+.auth-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.chatNotAuthenticated {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%;
+}
+
+.divChat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    align-self: center;
+}
+
+.logout-button {
+    background-color: var(--redButtons);
+    border-color: var(--redButtons);
+}
+
+
+.container_chat {
+    max-width: 60vh;
+    width: 100%;
+}
+
+.footer {
+    width: 100%;
+    margin-top: auto;
+    max-height: 8vh;
+    background-color: var(--greenLightGray);
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--greenDarker);
+    padding: 2%;
+    margin-bottom: 1%;
+    color: black;
+}
+
+.sections_Nav {
+    display: flex;
+    flex-direction: row;
+}
+
+.button.is-primary {
+    background-color: var(--greenDarker);
+    border-color: transparent;
+    color: #fff;
 }

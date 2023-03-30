@@ -1,31 +1,47 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import AuthContext from "../../context/authContext";
 import "../components.css";
 
 export default function Navbar() {
-    return (
-        <>
-            <nav className="navbar" role="navigation" aria-label="main navigation">
-                <div className="navbar-brand">
-                    <img src="/logo.png" width="112" height="28" />
-                    <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
+    const authContext = useContext(AuthContext);
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-                <div id="navbarBasicExample" className="navbar-menu">
-                    <div className="navbar-start">
+    useEffect(() => {
+        setIsAuthenticated(authContext.isAuthenticated())
+    });
+
+
+    return (
+        <header>
+            <nav className="navbar">
+                <section className="sections_Nav">
+                    <img src="/logo.png" width="112" height="28" />
+                    <Link to={"/"}>
                         <a className="navbar-item">
                             Home
                         </a>
+                    </Link>
+                    <Link to={"/chat"}>
                         <a className="navbar-item">
-                            Documentation
+                            Chat
                         </a>
-                    </div>
-                </div>
-
+                    </Link>
+                    <Link to={"/cart"}>
+                        <a className="navbar-item">
+                            Cart
+                        </a>
+                    </Link>
+                </section>
+                {isAuthenticated && <section className="sections_Nav">
+                    <Link to={"/"}>
+                        <button className="button logout-button" onClick={() => authContext.logout()}>
+                            Log out
+                        </button>
+                    </Link>
+                </section>}
             </nav>
-        </>
+
+        </header>
     );
 }
